@@ -12,14 +12,13 @@ import {
   insertAttendee,
   isUserRegistered,
 } from "@/lib/utils";
-import { UserButton, useUser } from "@civic/auth-web3/react";
+import { UserButton } from "@civic/auth-web3/react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
-export function Metadata() {
+export function Metadata({ user }: { user: any }) {
   const { id } = useParams<{ id: string }>();
   const supabase = createClient();
-  const { user } = useUser();
 
   const { data } = useQuery({
     queryKey: [`event-${id}`],
@@ -49,8 +48,6 @@ export function Metadata() {
   const { data: status } = useQuery({
     queryKey: ["is_registered"],
     queryFn: async () => await isUserRegistered(supabase, id, user?.id!),
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
   });
 
   return (
