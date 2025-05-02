@@ -34,6 +34,8 @@ export function Metadata() {
       return await insertAttendee(supabase, {
         event_id: id,
         user_id: user?.id!,
+        name: user?.name,
+        email: user?.email,
       });
     },
     onSuccess: () => {

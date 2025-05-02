@@ -26,6 +26,8 @@ export const eventSchema = z.object({
   uuid: z.string(),
 });
 
+export type Event = z.infer<typeof eventSchema>;
+
 export const eventsArraySchema = z.array(eventSchema);
 
 export async function fetchEvents(client: SupabaseClient, userId?: string) {
@@ -65,14 +67,18 @@ export function formatDate(input: string | Date): string {
 
 export const attendeeSchema = z.object({
   id: z.number(),
-  created_at: z.string().datetime(),
+  created_at: z.string(),
   event_id: z.string(),
   user_id: z.string(),
+  name: z.string(),
+  email: z.string(),
 });
 
 export const attendeeInsertSchema = z.object({
   event_id: z.string(),
   user_id: z.string(),
+  name: z.string().optional(),
+  email: z.string().optional(),
 });
 
 export type Attendee = z.infer<typeof attendeeSchema>;

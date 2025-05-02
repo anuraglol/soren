@@ -4,9 +4,15 @@ import { createClient, fetchEvents, formatDate, IMAGE_URL } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { CalendarIcon, LinkIcon, MapPinIcon } from "lucide-react";
+import {
+  CalendarIcon,
+  LinkIcon,
+  MapPinIcon,
+  TelescopeIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { useUser } from "@civic/auth-web3/react";
+import { EventAttendeesDialog } from "./attendees";
 
 export function Events() {
   const supabase = createClient();
@@ -44,7 +50,6 @@ export function Events() {
               <CalendarIcon className="h-4 w-4" />
               {formatDate(event.created_at)}
             </div>
-
             <Link
               href={`/event/${event.uuid}`}
               className="flex items-center gap-2 hover:text-rose-400"
@@ -54,6 +59,10 @@ export function Events() {
               <LinkIcon className="h-4 w-4" />
               <span>Visit</span>
             </Link>
+            <div className="flex items-center gap-2 cursor-pointer hover:text-rose-400">
+              <TelescopeIcon className="h-4 w-4" />
+              <EventAttendeesDialog event={event} />
+            </div>{" "}
           </CardContent>
         </Card>
       ))}
