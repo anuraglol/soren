@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+
 "use client";
 
 import Image from "next/image";
@@ -28,7 +30,7 @@ export function Metadata() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (d) => {
+    mutationFn: async () => {
       return await insertAttendee(supabase, {
         event_id: id,
         user_id: user?.id!,
@@ -45,6 +47,8 @@ export function Metadata() {
   const { data: status } = useQuery({
     queryKey: ["is_registered"],
     queryFn: async () => await isUserRegistered(supabase, id, user?.id!),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   return (

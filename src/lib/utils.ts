@@ -32,6 +32,7 @@ export async function fetchEvents(client: SupabaseClient, userId?: string) {
   const { data } = await client
     .from("events")
     .select("*")
+    .eq("created_by", userId)
     .order("created_at", { ascending: false });
 
   return eventsArraySchema.parse(data);
@@ -96,7 +97,7 @@ export async function fetchAttendeesByEvent(
   client: SupabaseClient,
   eventId: string
 ) {
-  const { data, error } = await client
+  const { data } = await client
     .from("attendees")
     .select("*")
     .eq("event_id", eventId)

@@ -6,16 +6,18 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { CalendarIcon, LinkIcon, MapPinIcon } from "lucide-react";
 import Link from "next/link";
+import { useUser } from "@civic/auth-web3/react";
 
 export function Events() {
   const supabase = createClient();
+  const { user } = useUser();
 
   const { data } = useQuery({
     queryKey: ["events"],
-    queryFn: async () => await fetchEvents(supabase),
+    queryFn: async () => await fetchEvents(supabase, user?.id),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
-
-  console.log("events", data);
 
   return (
     <div className="grid grid-cols-2 w-full max-w-4xl my-8 justify-between gap-4">

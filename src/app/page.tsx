@@ -17,7 +17,7 @@ export default async function Home() {
 
   await queryClient.prefetchQuery({
     queryKey: ["events"],
-    queryFn: async () => await fetchEvents(supabase),
+    queryFn: async () => await fetchEvents(supabase, user?.id),
   });
 
   return (
@@ -26,7 +26,7 @@ export default async function Home() {
         <HydrationBoundary state={dehydrate(queryClient)}>
           <div className="flex flex-col gap-6 w-full max-w-3xl items-center my-24">
             <div className="w-full max-w-3xl flex justify-between items-center">
-              <p>Hello, {user.name}</p>
+              <p>Hello, {user.name?.split(" ")[0]}</p>
 
               <CreateEventDialog />
             </div>

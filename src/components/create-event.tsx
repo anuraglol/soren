@@ -1,6 +1,6 @@
 "use client";
 
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -64,7 +64,7 @@ export default function CreateEventDialog() {
       queryClient.invalidateQueries({ queryKey: ["events"] });
       toast.success("Event created successfully");
     },
-    onError: (error) => {
+    onError: () => {
       toast.error("Error creating event");
     },
     onSettled: () => setOpen(false),
