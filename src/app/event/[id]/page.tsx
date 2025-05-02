@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+
 import { Metadata } from "@/components/metadata";
 import { createClient } from "@/lib/supabase";
 import { fetchEvent, isUserRegistered } from "@/lib/utils";
