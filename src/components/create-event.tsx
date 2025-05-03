@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
@@ -20,23 +19,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import { createClient } from "@/lib/utils";
-import { useUser } from "@civic/auth-web3/react";
-import { nanoid } from "nanoid";
-
-const createEventSchema = z.object({
-  name: z.string().min(1, "Event name is required"),
-  description: z.string().optional(),
-  location: z.string().min(1, "Location is required"),
-});
-
-type CreateEventFormValues = z.infer<typeof createEventSchema>;
+import { createEvent } from "@/lib/actions/event";
+import { CreateEventFormValues, createEventSchema } from "@/lib/validations";
 
 export default function CreateEventDialog() {
   const [open, setOpen] = useState(false);
 
-  const supabase = createClient();
-  const { user } = useUser();
   const queryClient = useQueryClient();
 
   const {
@@ -50,22 +38,15 @@ export default function CreateEventDialog() {
 
   const mutation = useMutation({
     mutationFn: async (data: CreateEventFormValues) => {
-      const { data: d } = await supabase.from("events").insert({
-        name: data.name,
-        description: data.description,
-        location: data.location,
-        created_by: user?.id,
-        uuid: nanoid(18),
-      });
-
-      return d;
+      return await createEvent(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["events"] });
       toast.success("Event created successfully");
     },
-    onError: () => {
+    onError: (e) => {
       toast.error("Error creating event");
+      console.error(e);
     },
     onSettled: () => setOpen(false),
   });

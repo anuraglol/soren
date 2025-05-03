@@ -6,17 +6,14 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import {
-  createClient,
-  fetchEvent,
-  insertAttendee,
-  isUserRegistered,
-} from "@/lib/utils";
+import { createClient, fetchEvent, isUserRegistered } from "@/lib/utils";
 import { UserButton } from "@civic/auth-web3/react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { registerAttendee } from "@/lib/actions/event";
+import { CivicUser } from "@/lib/validations";
 
-export function Metadata({ user }: { user: any }) {
+export function Metadata({ user }: { user: CivicUser }) {
   const { id } = useParams<{ id: string }>();
   const supabase = createClient();
 
@@ -30,12 +27,7 @@ export function Metadata({ user }: { user: any }) {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      return await insertAttendee(supabase, {
-        event_id: id,
-        user_id: user?.id!,
-        name: user?.name,
-        email: user?.email,
-      });
+      return await registerAttendee(id);
     },
     onSuccess: () => {
       toast.success("You have registered successfully!");

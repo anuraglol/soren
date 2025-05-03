@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { z } from "zod";
 
 import { SupabaseClient } from "@supabase/supabase-js";
+import { attendeeSchema, eventsArraySchema, eventSchema } from "./validations";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -15,20 +16,6 @@ export function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 }
-
-export const eventSchema = z.object({
-  id: z.number(),
-  created_at: z.string(),
-  name: z.string(),
-  description: z.string().optional(),
-  location: z.string(),
-  created_by: z.string(),
-  uuid: z.string(),
-});
-
-export type Event = z.infer<typeof eventSchema>;
-
-export const eventsArraySchema = z.array(eventSchema);
 
 export async function fetchEvents(client: SupabaseClient, userId?: string) {
   const { data } = await client
@@ -63,40 +50,6 @@ export function formatDate(input: string | Date): string {
     month: "long",
     day: "numeric",
   }).format(date);
-}
-
-export const attendeeSchema = z.object({
-  id: z.number(),
-  created_at: z.string(),
-  event_id: z.string(),
-  user_id: z.string(),
-  name: z.string(),
-  email: z.string(),
-});
-
-export const attendeeInsertSchema = z.object({
-  event_id: z.string(),
-  user_id: z.string(),
-  name: z.string().optional(),
-  email: z.string().optional(),
-});
-
-export type Attendee = z.infer<typeof attendeeSchema>;
-export type NewAttendee = z.infer<typeof attendeeInsertSchema>;
-
-export async function insertAttendee(
-  client: SupabaseClient,
-  data: NewAttendee
-) {
-  const parsed = attendeeInsertSchema.parse(data);
-
-  const { data: inserted } = await client
-    .from("attendees")
-    .insert(parsed)
-    .select()
-    .single();
-
-  return inserted;
 }
 
 export async function fetchAttendeesByEvent(

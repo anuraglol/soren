@@ -8,7 +8,8 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { createClient, Event, fetchAttendeesByEvent } from "@/lib/utils";
+import { createClient, fetchAttendeesByEvent } from "@/lib/utils";
+import { Event } from "@/lib/validations";
 import { useQuery } from "@tanstack/react-query";
 import { ScrollArea } from "./ui/scroll-area";
 import { Avatar, AvatarFallback } from "./ui/avatar";
@@ -23,8 +24,6 @@ export function EventAttendeesDialog({ event }: { event: Event }) {
     },
     enabled: !!event.uuid,
   });
-
-  console.log("attendees", attendees);
 
   return (
     <Dialog>

@@ -33,7 +33,7 @@ export default async function Home({
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="min-h-screen w-full font-[family-name:var(--font-geist-sans)] p-32 mx-auto text-neutral-300">
-        <Metadata user={user} />
+        <Metadata user={user!} />
       </div>
     </HydrationBoundary>
   );

@@ -1,7 +1,26 @@
+"use server";
+
+import jwt from "jsonwebtoken";
+import { getUser } from "@civic/auth-web3/nextjs";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export async function createClient() {
+const jwtSecret = process.env.SUPABASE_JWT_SECRET!;
+
+export const createAuthClient = async () => {
+  const user = await getUser();
+  const token = jwt.sign(
+    {
+      sub: user?.id,
+      role: "authenticated",
+    },
+    jwtSecret,
+    {
+      algorithm: "HS256",
+      expiresIn: "1h",
+    }
+  );
+
   const cookieStore = await cookies();
 
   return createServerClient(
@@ -20,6 +39,11 @@ export async function createClient() {
           } catch {}
         },
       },
+      global: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
     }
   );
-}
+};
