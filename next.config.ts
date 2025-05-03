@@ -9,12 +9,16 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_SUPABASE_URL?.split("://")[1]!,
+      },
     ],
   },
 };
 
 const withCivicAuth = createCivicAuthPlugin({
-  clientId: "0618ed43-79e6-4c51-bbd9-1d7973e7cffb",
+  clientId: process.env.NEXT_PUBLIC_CIVIC_CLIENT_ID!,
 });
 
 export default withCivicAuth(nextConfig);

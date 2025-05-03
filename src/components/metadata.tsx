@@ -6,7 +6,12 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { createClient, fetchEvent, isUserRegistered } from "@/lib/utils";
+import {
+  createClient,
+  fetchEvent,
+  IMAGE_URL,
+  isUserRegistered,
+} from "@/lib/utils";
 import { UserButton } from "@civic/auth-web3/react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -46,7 +51,7 @@ export function Metadata({ user }: { user: CivicUser }) {
     <div className="max-w-3xl flex flex-col mx-auto gap-6">
       <div className="w-full relative h-[25rem] mx-auto">
         <Image
-          src="https://res.cloudinary.com/dzheectoe/image/upload/v1744732405/ChatGPT_Image_Apr_15_2025_09_04_38_PM_1_tns5jy.jpg"
+          src={data?.image_url || IMAGE_URL}
           alt="Event Image"
           layout="fill"
           fill
@@ -59,7 +64,10 @@ export function Metadata({ user }: { user: CivicUser }) {
       </div>
 
       {user ? (
-        <Button disabled={is_admin || status} onClick={() => mutation.mutate()}>
+        <Button
+          disabled={is_admin || status || mutation.isPending}
+          onClick={() => mutation.mutate()}
+        >
           {is_admin ? (
             "You are the host"
           ) : status ? (

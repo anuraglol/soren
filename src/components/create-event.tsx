@@ -22,6 +22,9 @@ import { Loader2 } from "lucide-react";
 import { createEvent } from "@/lib/actions/event";
 import { CreateEventFormValues, createEventSchema } from "@/lib/validations";
 
+import { Controller } from "react-hook-form";
+import { ImageUpload } from "@/components/image-upload";
+
 export default function CreateEventDialog() {
   const [open, setOpen] = useState(false);
 
@@ -32,6 +35,7 @@ export default function CreateEventDialog() {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<CreateEventFormValues>({
     resolver: zodResolver(createEventSchema),
   });
@@ -66,6 +70,17 @@ export default function CreateEventDialog() {
           <DialogTitle className="my-2">Create a New Event</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <Controller
+            name="image"
+            control={control}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <ImageUpload
+                value={value}
+                onChange={onChange}
+                error={error?.message}
+              />
+            )}
+          />
           <div className="space-y-2">
             <Label htmlFor="name">Event Name</Label>
             <Input id="name" {...register("name")} />

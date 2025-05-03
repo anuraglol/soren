@@ -34,7 +34,7 @@ export function Events() {
         >
           <div className="relative h-48 w-full">
             <Image
-              src={IMAGE_URL}
+              src={event?.image_url || IMAGE_URL}
               alt="thumbnail"
               fill
               className="object-cover"

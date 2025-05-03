@@ -4,6 +4,9 @@ export const createEventSchema = z.object({
   name: z.string().min(1, "Event name is required"),
   description: z.string().optional(),
   location: z.string().min(1, "Location is required"),
+  image: z.instanceof(File).refine((file) => file.size < 5 * 1024 * 1024, {
+    message: "Image must be less than 5MB",
+  }),
 });
 
 export type CreateEventFormValues = z.infer<typeof createEventSchema>;
@@ -16,6 +19,7 @@ export const eventSchema = z.object({
   location: z.string(),
   created_by: z.string(),
   uuid: z.string(),
+  image_url: z.string().optional(),
 });
 
 export const eventsArraySchema = z.array(eventSchema);
