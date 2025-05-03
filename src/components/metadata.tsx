@@ -80,6 +80,12 @@ export function Metadata({ user }: { user: CivicUser }) {
       ) : (
         <UserButton className="w-2 h-12" />
       )}
+
+      {status && (
+        <p className="font-medium text-center">
+          You are registered for this event.
+        </p>
+      )}
     </div>
   );
 }
