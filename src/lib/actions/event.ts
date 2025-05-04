@@ -2,16 +2,17 @@
 
 import { nanoid } from "nanoid";
 import { createAuthClient } from "./jwt"; // adjust path
-import { getUser } from "@civic/auth-web3/nextjs";
-import { attendeeInsertSchema, CreateEventFormValues } from "../validations";
+import {
+  attendeeInsertSchema,
+  CivicUser,
+  CreateEventFormValues,
+} from "../validations";
 import { SupabaseClient } from "@supabase/supabase-js";
 
-export async function createEvent(data: CreateEventFormValues) {
-  console.log("Creating event with data:", data);
-  const supabase = await createAuthClient();
-  const user = await getUser();
+export async function createEvent(data: CreateEventFormValues, userId: string) {
+  const supabase = await createAuthClient(userId);
   const uuid = nanoid(18);
-  const d = await uploadEventImage(data.image, uuid, supabase, user?.id!);
+  const d = await uploadEventImage(data.image, uuid, supabase, userId!);
 
   const baseUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL + "/storage/v1/object/public/";
@@ -20,7 +21,7 @@ export async function createEvent(data: CreateEventFormValues) {
     name: data.name,
     description: data.description,
     location: data.location,
-    created_by: user?.id,
+    created_by: userId,
     uuid,
     image_url: baseUrl + d.fullPath,
   });
@@ -30,11 +31,8 @@ export async function createEvent(data: CreateEventFormValues) {
   return insertedData;
 }
 
-export async function registerAttendee(event_id: string) {
-  const user = await getUser();
-  if (!user) throw new Error("User not authenticated");
-
-  const supabase = await createAuthClient();
+export async function registerAttendee(event_id: string, user: CivicUser) {
+  const supabase = await createAuthClient(user.id);
 
   const parsed = attendeeInsertSchema.parse({
     event_id,

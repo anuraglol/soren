@@ -1,17 +1,15 @@
 "use server";
 
 import jwt from "jsonwebtoken";
-import { getUser } from "@civic/auth-web3/nextjs";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 const jwtSecret = process.env.SUPABASE_JWT_SECRET!;
 
-export const createAuthClient = async () => {
-  const user = await getUser();
+export const createAuthClient = async (userId: string) => {
   const token = jwt.sign(
     {
-      sub: user?.id,
+      sub: userId,
       role: "authenticated",
     },
     jwtSecret,

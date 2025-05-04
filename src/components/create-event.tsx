@@ -24,9 +24,11 @@ import { CreateEventFormValues, createEventSchema } from "@/lib/validations";
 
 import { Controller } from "react-hook-form";
 import { ImageUpload } from "@/components/image-upload";
+import { useUser } from "@civic/auth-web3/react";
 
 export default function CreateEventDialog() {
   const [open, setOpen] = useState(false);
+  const { user } = useUser();
 
   const queryClient = useQueryClient();
 
@@ -42,7 +44,7 @@ export default function CreateEventDialog() {
 
   const mutation = useMutation({
     mutationFn: async (data: CreateEventFormValues) => {
-      return await createEvent(data);
+      return await createEvent(data, user?.id!);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["events"] });

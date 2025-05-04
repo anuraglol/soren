@@ -30,12 +30,15 @@ export function Metadata({ user }: { user: CivicUser }) {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      return await registerAttendee(id);
+      return await registerAttendee(id, user);
     },
     onSuccess: () => {
       toast.success("You have registered successfully!");
-      queryClient.invalidateQueries({
-        queryKey: [`event-${id}`, "is_registered", "attendees"],
+      queryClient.refetchQueries({
+        queryKey: ["is_registered"],
+      });
+      queryClient.refetchQueries({
+        queryKey: [`event-${id}`],
       });
     },
   });
