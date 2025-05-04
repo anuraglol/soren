@@ -14,6 +14,7 @@ const eslintConfig = [
   ...compat.config({
     rules: {
       "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+      "no-unused-vars": "off",
     },
   }),
 ];
