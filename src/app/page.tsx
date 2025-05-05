@@ -1,42 +1,49 @@
-import CreateEventDialog from "@/components/create-event";
-import { Events } from "@/components/events";
-import { createClient } from "@/lib/supabase";
-import { fetchEvents } from "@/lib/utils";
+import { SignInButton } from "@/components/auth";
+import { AnimatedBeamDemo } from "@/components/flow";
+import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text";
+import { Meteors } from "@/components/magicui/meteors";
+import { BACKGROUND_IMAGE_URL, cn } from "@/lib/utils";
 import { getUser } from "@civic/auth-web3/nextjs";
-import { UserButton } from "@civic/auth-web3/react";
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
+import { ArrowRightIcon } from "lucide-react";
+import { redirect } from "next/navigation";
 
-export default async function Home() {
+export default async function LandingPage() {
   const user = await getUser();
-  const supabase = await createClient();
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: ["events"],
-    queryFn: async () => await fetchEvents(supabase, user?.id),
-  });
+  if (user) {
+    redirect("/app");
+  }
 
   return (
-    <div className="min-h-screen w-full font-[family-name:var(--font-geist-sans)] p-10 flex justify-center">
-      {user ? (
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <div className="flex flex-col gap-6 w-full max-w-3xl items-center my-24">
-            <div className="w-full max-w-3xl flex justify-between items-center">
-              <p>Hello, {user.name?.split(" ")[0]}</p>
+    <div
+      className="relative min-h-screen w-full bg-[rgb(0,0,15)] flex flex-col gap-6 items-center px-72 py-48"
+      style={{
+        backgroundImage: `url(${BACKGROUND_IMAGE_URL})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <Meteors className="z-0" />
+      <div
+        className={cn(
+          "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800"
+        )}
+      >
+        <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
+          <span>✨ Project is live on github</span>
+          <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+        </AnimatedShinyText>
+      </div>
+      <p className="text-8xl font-[900] text-white text-center max-w-5xl w-full leading-32 font-[family-name:var(--font-inter)]">
+        Manage your events, create your own.
+      </p>
 
-              <CreateEventDialog />
-            </div>
+      <p className="text-2xl text-neutral-200 text-center">
+        Soren makes it easy to create and manage events, with a focus on
+        simplicity and ease of use.
+      </p>
 
-            <Events />
-          </div>
-        </HydrationBoundary>
-      ) : (
-        <UserButton className="w-2 h-12" />
-      )}
+      <SignInButton />
+      <AnimatedBeamDemo />
     </div>
   );
 }

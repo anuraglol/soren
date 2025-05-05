@@ -80,3 +80,6 @@ export async function isUserRegistered(
 
   return !!data;
 }
+
+export const BACKGROUND_IMAGE_URL =
+  "https://res.cloudinary.com/dzheectoe/image/upload/v1746448063/k6yggcm76nxmkfrayvnt.svg";
