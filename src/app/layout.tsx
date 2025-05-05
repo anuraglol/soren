@@ -28,7 +28,7 @@ export default function RootLayout({
           rel="preload"
           href={BACKGROUND_IMAGE_URL}
           as="image"
-          type="image/jpeg"
+          type="image/svg"
           crossOrigin="anonymous"
         />
       </head>
