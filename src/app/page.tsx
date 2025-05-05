@@ -1,10 +1,11 @@
-import { SignInButton } from "@/components/auth";
 import { AnimatedBeamDemo } from "@/components/flow";
 import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text";
 import { Meteors } from "@/components/magicui/meteors";
+import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { BACKGROUND_IMAGE_URL, cn } from "@/lib/utils";
 import { getUser } from "@civic/auth-web3/nextjs";
 import { ArrowRightIcon } from "lucide-react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function LandingPage() {
@@ -42,7 +43,19 @@ export default async function LandingPage() {
         simplicity and ease of use.
       </p>
 
-      <SignInButton />
+      <Link href="/app">
+        <ShimmerButton
+          shimmerColor="#c084fc"
+          shimmerSize="0.08em"
+          shimmerDuration="2s"
+          className="shadow-2xl cursor-pointer w-full"
+        >
+          <span className="whitespace-pre-wrap text-center text-2xl py-3 px-6 font-medium leading-none tracking-tight text-white dark:text-white lg:text-lg">
+            {user ? "Go to App" : "Get Started"}
+          </span>
+        </ShimmerButton>
+      </Link>
+
       <AnimatedBeamDemo />
     </div>
   );
