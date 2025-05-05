@@ -10,7 +10,7 @@ import {
   IMAGE_URL,
   isUserRegistered,
 } from "@/lib/utils";
-import { UserButton } from "@civic/auth-web3/react";
+import { SignInButton } from "@civic/auth-web3/react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { registerAttendee } from "@/lib/actions/event";
@@ -30,12 +30,15 @@ export function Metadata({ user }: { user: CivicUser }) {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      return await registerAttendee(id);
+      return await registerAttendee(id, user);
     },
     onSuccess: () => {
       toast.success("You have registered successfully!");
-      queryClient.invalidateQueries({
-        queryKey: [`event-${id}`, "is_registered", "attendees"],
+      queryClient.refetchQueries({
+        queryKey: ["is_registered"],
+      });
+      queryClient.refetchQueries({
+        queryKey: [`event-${id}`],
       });
     },
   });
@@ -78,7 +81,13 @@ export function Metadata({ user }: { user: CivicUser }) {
           )}
         </Button>
       ) : (
-        <UserButton className="w-2 h-12" />
+        <SignInButton className="cursor-pointer text-md inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground shadow-xs hover:bg-primary/90" />
+      )}
+
+      {status && (
+        <p className="font-medium text-center">
+          You are registered for this event.
+        </p>
       )}
     </div>
   );

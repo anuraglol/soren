@@ -38,7 +38,7 @@ export function EventAttendeesDialog({ event }: { event: Event }) {
           </DialogDescription>
         </DialogHeader>
 
-        {attendees && attendees.length > 0 && (
+        {attendees && attendees.length > 0 ? (
           <ScrollArea className="max-h-64 space-y-4 pr-2">
             {attendees.length > 0 ? (
               attendees.map((attendee, index) => (
@@ -64,6 +64,10 @@ export function EventAttendeesDialog({ event }: { event: Event }) {
               <p className="text-sm text-muted-foreground">No attendees yet.</p>
             )}
           </ScrollArea>
+        ) : (
+          <span className="text-muted-foreground text-center">
+            There are no attendees yet for this event.
+          </span>
         )}
       </DialogContent>
     </Dialog>
