@@ -7,7 +7,6 @@ import { getUser } from "@civic/auth-web3/nextjs";
 import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 function BackgroundImagePreloader() {
   return (
@@ -24,9 +23,6 @@ function BackgroundImagePreloader() {
 
 export default async function LandingPage() {
   const user = await getUser();
-  if (user) {
-    redirect("/app");
-  }
 
   return (
     <div className="relative min-h-screen w-full bg-[rgb(0,0,15)] flex flex-col gap-6 items-center px-72 py-48">

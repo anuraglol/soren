@@ -32,14 +32,15 @@ export function Metadata({ user }: { user: CivicUser }) {
     mutationFn: async () => {
       return await registerAttendee(id, user);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("You have registered successfully!");
-      queryClient.refetchQueries({
+      queryClient.invalidateQueries({
         queryKey: ["is_registered"],
       });
       queryClient.refetchQueries({
         queryKey: [`event-${id}`],
       });
+      // await sendEmail(user);
     },
   });
 
@@ -86,7 +87,8 @@ export function Metadata({ user }: { user: CivicUser }) {
 
       {status && (
         <p className="font-medium text-center">
-          You are registered for this event.
+          You are registered for this event. You will receive an email with the
+          details of the event.
         </p>
       )}
     </div>
