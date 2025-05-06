@@ -24,7 +24,6 @@ export async function createEvent(data: CreateEventFormValues, userId: string) {
     created_by: userId,
     uuid,
     image_url: baseUrl + d.fullPath,
-    date: data.date,
   });
 
   if (error) throw new Error(error.message);

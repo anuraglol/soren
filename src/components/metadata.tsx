@@ -87,8 +87,7 @@ export function Metadata({ user }: { user: CivicUser }) {
 
       {status && (
         <p className="font-medium text-center">
-          You are registered for this event. You will receive an email with the
-          details of the event.
+          You are registered for this event.
         </p>
       )}
     </div>
