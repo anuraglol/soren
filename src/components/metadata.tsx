@@ -51,7 +51,7 @@ export function Metadata({ user }: { user: CivicUser }) {
   });
 
   return (
-    <div className="max-w-3xl flex flex-col mx-auto gap-6">
+    <div className="w-full max-w-3xl flex flex-col mx-auto gap-6 px-4 sm:px-6 md:px-8">
       <div className="w-full relative h-[25rem] mx-auto">
         <Image
           src={data?.image_url || IMAGE_URL}

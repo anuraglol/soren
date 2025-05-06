@@ -21,7 +21,7 @@ export default async function Home() {
   });
 
   return (
-    <div className="min-h-screen w-full font-[family-name:var(--font-geist-sans)] p-10 flex justify-center">
+    <div className="min-h-screen w-full font-[family-name:var(--font-geist-sans)] px-10 py-2 flex justify-center">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <div className="flex flex-col gap-6 w-full max-w-3xl items-center my-24">
           <div className="w-full max-w-3xl flex justify-between items-center">

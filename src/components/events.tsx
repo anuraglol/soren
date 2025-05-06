@@ -26,7 +26,7 @@ export function Events() {
   });
 
   return (
-    <div className="grid grid-cols-2 w-full max-w-4xl my-8 justify-between gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-3xl my-8 justify-items-center items-center justify-center gap-4">
       {data?.map((event) => (
         <Card
           key={event.id}

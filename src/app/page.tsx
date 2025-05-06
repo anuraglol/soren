@@ -25,8 +25,8 @@ export default async function LandingPage() {
   const user = await getUser();
 
   return (
-    <div className="relative min-h-screen w-full bg-[rgb(0,0,15)] flex flex-col gap-6 items-center px-72 py-48">
-      <div className="absolute w-full min-h-full top-10">
+    <div className="relative min-h-screen w-full bg-[rgb(0,0,15)] flex flex-col gap-6 items-center px-4 sm:px-8 md:px-16 lg:px-24 xl:px-48 2xl:px-72 py-12 sm:py-24 md:py-36 lg:py-48">
+      <div className="absolute w-full min-h-full top-10 hidden sm:block">
         <BackgroundImagePreloader />
       </div>
 
@@ -41,11 +41,11 @@ export default async function LandingPage() {
           <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
         </AnimatedShinyText>
       </div>
-      <p className="text-8xl font-[900] text-white text-center max-w-5xl w-full leading-32 font-[family-name:var(--font-inter)] z-[100]">
+      <p className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-white text-center max-w-5xl w-full leading-tight z-[100] font-[family-name:var(--font-inter)]">
         Manage your events, create your own.
       </p>
 
-      <p className="text-2xl text-neutral-200 text-center z-[100]">
+      <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-neutral-200 text-center z-[100] max-w-2xl">
         Soren makes it easy to create and manage events, with a focus on
         simplicity and ease of use.
       </p>
@@ -55,9 +55,9 @@ export default async function LandingPage() {
           shimmerColor="#c084fc"
           shimmerSize="0.08em"
           shimmerDuration="2s"
-          className="shadow-2xl cursor-pointer w-full z-[100]"
+          className="shadow-2xl cursor-pointer w-full max-w-xs sm:max-w-sm md:max-w-md z-[100]"
         >
-          <span className="whitespace-pre-wrap text-center text-2xl py-3 px-6 font-medium leading-none tracking-tight text-white dark:text-white lg:text-lg">
+          <span className="whitespace-pre-wrap text-center text-base sm:text-lg md:text-xl py-2 sm:py-3 px-4 sm:px-6 font-medium leading-none tracking-tight text-white dark:text-white">
             {user ? "Go to App" : "Get Started"}
           </span>
         </ShimmerButton>
