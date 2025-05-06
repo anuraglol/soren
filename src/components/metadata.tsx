@@ -11,7 +11,7 @@ import {
   isUserRegistered,
 } from "@/lib/utils";
 import { SignInButton } from "@civic/auth-web3/react";
-import { Loader2 } from "lucide-react";
+import { Loader2, MapPinIcon } from "lucide-react";
 import { toast } from "sonner";
 import { registerAttendee } from "@/lib/actions/event";
 import { CivicUser } from "@/lib/validations";
@@ -63,6 +63,10 @@ export function Metadata({ user }: { user: CivicUser }) {
       </div>
       <div>
         <p className="text-lg font-medium text-neutral-200">{data?.name}</p>
+        <div className="flex items-center gap-1 text-lg">
+          <MapPinIcon className="h-4 w-4" />
+          <span>{data?.location}</span>
+        </div>
         <p>{data?.description}</p>
       </div>
 
