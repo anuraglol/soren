@@ -1,25 +1,33 @@
 "use server";
 
-import { Resend } from "resend";
+import { render } from "@react-email/components";
+import nodemailer from "nodemailer";
 import { EmailTemplate } from "@/components/email";
 import { CivicUser } from "../validations";
 
-export const sendEmail = async (user: CivicUser) => {
-  const resend = new Resend(process.env.RESEND_API_KEY);
+const EMAIL_ADDRESS = "sandwichsoren@gmail.com";
 
-  const res = await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: user?.email!,
-    subject: "Hello from Server Action",
-    react: EmailTemplate({
-      userFirstname: user?.name!,
-    }),
+export const sendEmail = async (user: CivicUser) => {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: EMAIL_ADDRESS,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
   });
 
-  if (res.error) {
-    console.error("Error sending email:", res.error);
-    throw new Error("Failed to send email");
-  }
-  console.log("Email sent successfully:", res);
-  return res;
+  const emailHtml = await render(
+    EmailTemplate({
+      userFirstname: user.name?.split(" ")[0] || "",
+    })
+  );
+
+  const options = {
+    from: EMAIL_ADDRESS,
+    to: user.email,
+    subject: "hello world",
+    html: emailHtml,
+  };
+
+  await transporter.sendMail(options);
 };

@@ -15,6 +15,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { registerAttendee } from "@/lib/actions/event";
 import { CivicUser } from "@/lib/validations";
+import { sendEmail } from "@/lib/actions/email";
 
 export function Metadata({ user }: { user: CivicUser }) {
   const { id } = useParams<{ id: string }>();
@@ -40,7 +41,7 @@ export function Metadata({ user }: { user: CivicUser }) {
       queryClient.refetchQueries({
         queryKey: [`event-${id}`],
       });
-      // await sendEmail(user);
+      await sendEmail(user);
     },
   });
 
@@ -87,7 +88,8 @@ export function Metadata({ user }: { user: CivicUser }) {
 
       {status && (
         <p className="font-medium text-center">
-          You are registered for this event.
+          You are registered for this event. An email will be sent to you soon.
+          Please check your spam folder if you do not see it in your inbox.
         </p>
       )}
     </div>
