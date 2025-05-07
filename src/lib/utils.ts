@@ -27,7 +27,7 @@ export async function fetchEvents(client: SupabaseClient, userId?: string) {
   try {
     return eventsArraySchema.parse(data);
   } catch (error) {
-    throw new Error("Failed to parse events");
+    throw new Error(`Failed to parse events: ${error}`);
   }
 }
 
