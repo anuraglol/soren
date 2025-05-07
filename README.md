@@ -2,9 +2,7 @@
 
 **Soren** is a decentralized event management platform. Users can create and manage events, register as attendees, and send tips to event hosts using embedded wallets — all seamlessly integrated via Civic authentication.
 
-<!-- add an image here -->
-
-![Soren Preview Image](https://res.cloudinary.com/dzheectoe/image/upload/v1746600579/zuv37qq1kumtl32pj95s.png)
+![Soren Preview Image](https://res.cloudinary.com/dzheectoe/image/upload/v1746601358/nrsgwwwopwqdbbrewwfw.png)
 
 ## Features
 
