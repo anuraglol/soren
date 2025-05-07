@@ -6,7 +6,6 @@ import {
   Head,
   Hr,
   Html,
-  Img,
   Preview,
   Section,
   Text,
@@ -16,10 +15,6 @@ interface KoalaWelcomeEmailProps {
   userFirstname: string;
   event?: Event;
 }
-
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "";
 
 export const EmailTemplate = ({
   userFirstname,
@@ -33,13 +28,6 @@ export const EmailTemplate = ({
         built for events.
       </Preview>
       <Container style={container}>
-        <Img
-          src={`${baseUrl}/static/koala-logo.png`}
-          width="170"
-          height="50"
-          alt="Koala"
-          style={logo}
-        />
         <Text style={paragraph}>Hi {userFirstname},</Text>
         <Text style={paragraph}>
           Hello, {userFirstname}! You are successfully registered for{" "}
@@ -72,10 +60,6 @@ const main = {
 const container = {
   margin: "0 auto",
   padding: "20px 0 48px",
-};
-
-const logo = {
-  margin: "0 auto",
 };
 
 const paragraph = {

@@ -11,11 +11,12 @@ import {
   isUserRegistered,
 } from "@/lib/utils";
 import { SignInButton } from "@civic/auth-web3/react";
-import { Loader2 } from "lucide-react";
+import { Loader2, MapPinIcon } from "lucide-react";
 import { toast } from "sonner";
 import { registerAttendee } from "@/lib/actions/event";
 import { CivicUser } from "@/lib/validations";
 import { sendEmail } from "@/lib/actions/email";
+import Link from "next/link";
 
 export function Metadata({ user }: { user: CivicUser }) {
   const { id } = useParams<{ id: string }>();
@@ -51,7 +52,7 @@ export function Metadata({ user }: { user: CivicUser }) {
   });
 
   return (
-    <div className="max-w-3xl flex flex-col mx-auto gap-6">
+    <div className="w-full max-w-3xl flex flex-col mx-auto gap-6 px-4 sm:px-6 md:px-8">
       <div className="w-full relative h-[25rem] mx-auto">
         <Image
           src={data?.image_url || IMAGE_URL}
@@ -63,6 +64,10 @@ export function Metadata({ user }: { user: CivicUser }) {
       </div>
       <div>
         <p className="text-lg font-medium text-neutral-200">{data?.name}</p>
+        <div className="flex items-center gap-1 text-lg">
+          <MapPinIcon className="h-4 w-4" />
+          <span>{data?.location}</span>
+        </div>
         <p>{data?.description}</p>
       </div>
 
@@ -90,6 +95,21 @@ export function Metadata({ user }: { user: CivicUser }) {
         <p className="font-medium text-center">
           You are registered for this event. An email will be sent to you soon.
           Please check your spam folder if you do not see it in your inbox.
+        </p>
+      )}
+
+      {data?.wallet_address && (
+        <p className="font-medium text-center">
+          You can tip the event host through the Solana network:{" "}
+          <Link
+            href={`https://explorer.solana.com/address/${data?.wallet_address}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-rose-400 hover:underline"
+          >
+            {data?.wallet_address.slice(0, 6)}...
+            {data?.wallet_address.slice(-4)}
+          </Link>
         </p>
       )}
     </div>

@@ -24,7 +24,11 @@ export async function fetchEvents(client: SupabaseClient, userId?: string) {
     .eq("created_by", userId)
     .order("created_at", { ascending: false });
 
-  return eventsArraySchema.parse(data);
+  try {
+    return eventsArraySchema.parse(data);
+  } catch (error) {
+    throw new Error(`Failed to parse events: ${error}`);
+  }
 }
 
 export async function fetchEvent(client: SupabaseClient, uuid: string) {

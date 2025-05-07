@@ -13,20 +13,34 @@ import {
 import Link from "next/link";
 import { useUser } from "@civic/auth-web3/react";
 import { EventAttendeesDialog } from "./attendees";
+import { useEffect } from "react";
+import { userHasWallet } from "@civic/auth-web3";
 
 export function Events() {
   const supabase = createClient();
-  const { user } = useUser();
+  const userContext = useUser();
+  const user = userContext.user;
+
+  useEffect(() => {
+    const createWalletIfNeeded = async () => {
+      if (userContext.user && !userHasWallet(userContext)) {
+        await userContext.createWallet();
+      }
+    };
+    createWalletIfNeeded();
+
+    return () => {};
+  }, [userContext]);
 
   const { data } = useQuery({
     queryKey: ["events"],
     queryFn: async () => await fetchEvents(supabase, user?.id),
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   });
 
   return (
-    <div className="grid grid-cols-2 w-full max-w-4xl my-8 justify-between gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-3xl my-8 justify-items-center items-center justify-center gap-4">
       {data?.map((event) => (
         <Card
           key={event.id}
