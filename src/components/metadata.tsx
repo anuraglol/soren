@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { registerAttendee } from "@/lib/actions/event";
 import { CivicUser } from "@/lib/validations";
 import { sendEmail } from "@/lib/actions/email";
+import Link from "next/link";
 
 export function Metadata({ user }: { user: CivicUser }) {
   const { id } = useParams<{ id: string }>();
@@ -94,6 +95,21 @@ export function Metadata({ user }: { user: CivicUser }) {
         <p className="font-medium text-center">
           You are registered for this event. An email will be sent to you soon.
           Please check your spam folder if you do not see it in your inbox.
+        </p>
+      )}
+
+      {data?.wallet_address && (
+        <p className="font-medium text-center">
+          You can tip the event host through the Solana network:{" "}
+          <Link
+            href={`https://explorer.solana.com/address/${data?.wallet_address}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-rose-400 hover:underline"
+          >
+            {data?.wallet_address.slice(0, 6)}...
+            {data?.wallet_address.slice(-4)}
+          </Link>
         </p>
       )}
     </div>

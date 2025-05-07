@@ -25,11 +25,12 @@ import { CreateEventFormValues, createEventSchema } from "@/lib/validations";
 import { Controller } from "react-hook-form";
 import { ImageUpload } from "@/components/image-upload";
 import { useUser } from "@civic/auth-web3/react";
-import { sendEmail } from "@/lib/actions/email";
+import { userHasWallet } from "@civic/auth-web3";
 
 export default function CreateEventDialog() {
   const [open, setOpen] = useState(false);
-  const { user } = useUser();
+  const userCtx = useUser();
+  const user = userCtx.user;
 
   const queryClient = useQueryClient();
 
@@ -45,11 +46,13 @@ export default function CreateEventDialog() {
 
   const mutation = useMutation({
     mutationFn: async (data: CreateEventFormValues) => {
-      return await createEvent(data, user?.id!);
+      const wallet = userHasWallet(userCtx)
+        ? userCtx.solana.address
+        : undefined;
+      return await createEvent(data, user?.id!, wallet);
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["events"] });
-      await sendEmail(user!);
       toast.success("Event created successfully");
     },
     onError: (e) => {

@@ -20,6 +20,7 @@ export const eventSchema = z.object({
   created_by: z.string(),
   uuid: z.string(),
   image_url: z.string().optional(),
+  wallet_address: z.string().nullable().optional(),
 });
 
 export const eventsArraySchema = z.array(eventSchema);

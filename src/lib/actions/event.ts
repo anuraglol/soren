@@ -9,7 +9,11 @@ import {
 } from "../validations";
 import { SupabaseClient } from "@supabase/supabase-js";
 
-export async function createEvent(data: CreateEventFormValues, userId: string) {
+export async function createEvent(
+  data: CreateEventFormValues,
+  userId: string,
+  walletAddress?: string
+) {
   const supabase = await createAuthClient(userId);
   const uuid = nanoid(18);
   const d = await uploadEventImage(data.image, uuid, supabase, userId!);
@@ -24,6 +28,7 @@ export async function createEvent(data: CreateEventFormValues, userId: string) {
     created_by: userId,
     uuid,
     image_url: baseUrl + d.fullPath,
+    wallet_address: walletAddress,
   });
 
   if (error) throw new Error(error.message);
