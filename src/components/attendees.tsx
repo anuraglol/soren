@@ -40,29 +40,23 @@ export function EventAttendeesDialog({ event }: { event: Event }) {
 
         {attendees && attendees.length > 0 ? (
           <ScrollArea className="max-h-64 space-y-4 pr-2">
-            {attendees.length > 0 ? (
-              attendees.map((attendee, index) => (
-                <div key={index} className="flex items-center gap-3 mb-2">
-                  <Avatar className="h-12 w-12">
-                    <AvatarFallback className="text-lg font-medium">
-                      {attendee.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")
-                        .toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="text-md">
-                    <p className="font-medium text-foreground">
-                      {attendee.name}
-                    </p>
-                    <p className="text-muted-foreground">{attendee.email}</p>
-                  </div>
+            {attendees.map((attendee, index) => (
+              <div key={index} className="flex items-center gap-3 mb-2">
+                <Avatar className="h-12 w-12">
+                  <AvatarFallback className="text-lg font-medium">
+                    {attendee.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="text-md">
+                  <p className="font-medium text-foreground">{attendee.name}</p>
+                  <p className="text-muted-foreground">{attendee.email}</p>
                 </div>
-              ))
-            ) : (
-              <p className="text-sm text-muted-foreground">No attendees yet.</p>
-            )}
+              </div>
+            ))}
           </ScrollArea>
         ) : (
           <span className="text-muted-foreground text-center">

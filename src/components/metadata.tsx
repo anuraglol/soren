@@ -39,7 +39,7 @@ export function Metadata({ user }: { user: CivicUser }) {
       queryClient.invalidateQueries({
         queryKey: ["is_registered"],
       });
-      queryClient.refetchQueries({
+      queryClient.invalidateQueries({
         queryKey: [`event-${id}`],
       });
       await sendEmail(user);

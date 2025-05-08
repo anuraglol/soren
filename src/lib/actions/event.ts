@@ -1,7 +1,7 @@
 "use server";
 
 import { nanoid } from "nanoid";
-import { createAuthClient } from "./jwt"; // adjust path
+import { createAuthClient } from "./jwt";
 import {
   attendeeInsertSchema,
   CivicUser,
