@@ -16,7 +16,8 @@ function BackgroundImagePreloader() {
       priority
       fill
       className="object-cover opacity-80"
-      quality={80}
+      quality={50}
+      loading="eager"
     />
   );
 }
@@ -31,16 +32,23 @@ export default async function LandingPage() {
       </div>
 
       <Meteors className="z-[500]" />
-      <div
-        className={cn(
-          "group z-50 rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800"
-        )}
+      <Link
+        href="https://github.com/anuraglol/soren"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="z-[100]"
       >
-        <AnimatedShinyText className="inline-flex z-[100] items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
-          <span>✨ Project is live on github</span>
-          <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
-        </AnimatedShinyText>
-      </div>
+        <div
+          className={cn(
+            "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800"
+          )}
+        >
+          <AnimatedShinyText className="inline-flex z-[100] items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
+            <span>✨ Project is live on github</span>
+            <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+          </AnimatedShinyText>
+        </div>
+      </Link>
       <p className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-white text-center max-w-5xl w-full leading-tight z-[100] font-[family-name:var(--font-inter)]">
         Manage your events, create your own.
       </p>
