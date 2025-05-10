@@ -23,6 +23,8 @@ export function EventAttendeesDialog({ event }: { event: Event }) {
       return await fetchAttendeesByEvent(supabase, event.uuid);
     },
     enabled: !!event.uuid,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   });
 
   return (
